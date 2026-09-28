@@ -1,0 +1,19 @@
+# APIFae Configuration
+# Documentation: https://docs.apifae.com/config
+
+name: apifae-action-fixture
+version: 1.0.0
+schemas:
+- schemas/**/*.yaml
+- schemas/**/*.json
+mocks:
+  directory: mocks
+  defaults:
+    delay_ms: 0
+server:
+  port: 4000
+  host: 127.0.0.1
+  cors: true
+log_level: info
+output_format: text
+update_check: false

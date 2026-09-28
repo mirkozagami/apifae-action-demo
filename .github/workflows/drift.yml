@@ -1,0 +1,25 @@
+name: API drift
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  diff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Stands in for the real API: a plain HTTP server over api/.
+      - name: Start the API
+        run: |
+          python3 -m http.server 8080 --directory api &
+          for _ in $(seq 1 50); do curl -fsS -o /dev/null http://127.0.0.1:8080/ && exit 0; sleep 0.1; done
+          exit 1
+
+      # The guide's five lines, with only the URL changed.
+      - name: Check the API for drift
+        uses: apifae/action@v1
+        with:
+          url: http://127.0.0.1:8080

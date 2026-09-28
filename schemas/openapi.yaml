@@ -1,0 +1,49 @@
+openapi: 3.0.3
+info:
+  title: Widgets API
+  version: 1.0.0
+  description: >
+    Small fixture spec for apifae/action's own tests: one endpoint, small
+    enough to keep the "clean" and "drift" HTTP fixtures readable in one
+    screen.
+servers:
+  - url: http://localhost:9100
+    description: Local dev instance of the real implementation
+
+paths:
+  /widgets:
+    get:
+      operationId: listWidgets
+      summary: List widgets
+      responses:
+        '200':
+          description: A page of widgets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WidgetPage'
+
+components:
+  schemas:
+    Widget:
+      type: object
+      required: [id, name, count]
+      properties:
+        id:
+          type: string
+          example: "wdg_1"
+        name:
+          type: string
+          example: "Sprocket"
+        count:
+          type: integer
+          example: 3
+
+    WidgetPage:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Widget'

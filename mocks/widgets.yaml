@@ -1,0 +1,11 @@
+- path: /widgets
+  method: GET
+  responses:
+  - status: 200
+    headers:
+      content-type: application/json
+    body:
+      data:
+      - id: wdg_1
+        name: Sprocket
+        count: 3
